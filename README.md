@@ -1,20 +1,30 @@
 **Note:** For the screenshots, you can store all of your answer images in the `answer-img` directory.
 
 ## Verify the monitoring installation
-
-*TODO:* run `kubectl` command to show the running pods and services for all components. Take a screenshot of the output and include it here to verify the installation
+![Pods and Services](./answer-img/01_PodSvc.png)
 
 ## Setup the Jaeger and Prometheus source
-*TODO:* Expose Grafana to the internet and then setup Prometheus as a data source. Provide a screenshot of the home page after logging into Grafana.
+![Grafana Home](./answer-img/02_Grafana-Home.png)
 
 ## Create a Basic Dashboard
-*TODO:* Create a dashboard in Grafana that shows Prometheus as a source. Take a screenshot and include it here.
+![Grafana Prometheus](./answer-img/03_Grafana-Prometheus.png)
 
 ## Describe SLO/SLI
-*TODO:* Describe, in your own words, what the SLIs are, based on an SLO of *monthly uptime* and *request response time*.
+SLO: *monthly uptime* - SLI: 99.5% of all requests in one month are answered successfully
+
+SLO: *request response time* - SLI: 99% of requests have a latency of less than 100ms
 
 ## Creating SLI metrics.
-*TODO:* It is important to know why we want to measure certain metrics for our customer. Describe in detail 5 metrics to measure these SLIs. 
+1. Availability
+    - Percentage of successfully answered requests in a day
+2. Errors
+    - Number of HTTP 5xx responses per week
+3. Average Latency
+    - Average response times for requests by the customer in a day
+4. Percentage of Slow Responses
+    - Percentage of response times slower than a threshold in a day
+5. Hardware Limitations
+    - Maximum CPU usage in one hour. 
 
 ## Create a Dashboard to measure our SLIs
 *TODO:* Create a dashboard to measure the uptime of the frontend and backend services We will also want to measure to measure 40x and 50x errors. Create a dashboard that show these values over a 24 hour period and take a screenshot.
