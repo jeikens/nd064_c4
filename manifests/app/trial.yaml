@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: trial-app
+  annotations:
+    "sidecar.jaegertracing.io/inject": "true"
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: trial
@@ -14,7 +16,8 @@ spec:
     spec:
       containers:
       - name: trial
-        image: ghcr.io/jasonsmithio/trial:v1
+        image: jeikens/udaobsrv-trial:v2
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
 ---
@@ -22,10 +25,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: trial-service
+  labels:
+    app: trial
 spec:
   selector:
     app: trial
   ports:
-    - port: 8082
+    - name: trialport
+      port: 8082
       targetPort: 8080
   type: LoadBalancer

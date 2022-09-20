@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, jsonify
+from prometheus_flask_exporter import PrometheusMetrics
 
 import pymongo
 from flask_pymongo import PyMongo
 
 app = Flask(__name__)
+PrometheusMetrics(app)
 
 app.config["MONGO_DBNAME"] = "example-mongodb"
 app.config[

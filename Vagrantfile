@@ -29,6 +29,8 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 9090, host: 9090
   config.vm.network "forwarded_port", guest: 8080, host: 8080
+  config.vm.network "forwarded_port", guest: 8081, host: 8081
+  config.vm.network "forwarded_port", guest: 8082, host: 8082
   #config.vm.network "forwarded_port", guest: 8888, host: 8080 
   config.vm.network "forwarded_port", guest: 9090, host: 8888
   config.vm.network "forwarded_port", guest: 3000, host: 3000
@@ -70,9 +72,10 @@ Vagrant.configure("2") do |config|
   #
   #   # Customize the amount of memory on the VM:clear
 
-    vb.memory = "4096"
+    vb.memory = "6144"
     #vb.memory = "2048"
     vb.name = "k3s"
+    vb.cpus = 2
   end
   #
   # View the documentation for the provider you are using for more
