@@ -15,4 +15,4 @@ def error500():
     return 'server error for testing', 500
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=8080)
