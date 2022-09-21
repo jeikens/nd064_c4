@@ -6,3 +6,4 @@ pymongo
 Flask-PyMongo
 prometheus-client
 prometheus_flask_exporter
+jaeger_client
