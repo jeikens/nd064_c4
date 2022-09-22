@@ -10,6 +10,8 @@
 
 ## Create a Basic Dashboard
 ![Grafana Prometheus](./answer-img/03_Grafana-Prometheus.png)
+![Grafana Prometheus](./answer-img/03_Grafana-Prometheus_DataSources.png)
+![Grafana Prometheus](./answer-img/03_Grafana-Prometheus_DataSourcePanel.png)
 
 ## Describe SLO/SLI
 SLO: *monthly uptime* - SLI: 99.5% of all requests in one month are answered successfully
@@ -66,18 +68,33 @@ We want to create an SLO guaranteeing that our application has a 99.95% uptime p
 1. Percentage of uptime of the backend and frontend containers is greater than 99.9%
 2. Error Rate is less than 0.05% (HTTP4xx and 5xx responses to total number of requests)
 3. Average response time less than 150ms
-4. 95% requests are answered in less than 300ms
+4. Hardware usage does not exceed available resources
 
 
 ## Building KPIs for our plan
 Now that we have our SLIs and SLOs, create a list of 2-3 KPIs to accurately measure these metrics as well as a description of why those KPIs were chosen. We will make a dashboard for this, but first write them down here.
 
-1. Service **Uptime** is greater than 99.9%: Users want to be able to access online services whenever they like. Regular downtime of a service will certainly repell users.
-2. **Error** rate is less than 0.05%: Users want to interact with a fault-free service. The number of errors visible to the user should be as low as possible.
-3. Average **response time** is less than 150ms: The service should be responsive to user interaction. 
+1. **Uptime**: Users want to be able to access online services whenever they like. Regular downtime of a service will certainly repell users.
+    - At least one frontend pod is up for greater than 99.9% of time
+    - At least one backend pod is up for greater than 99.9% of time
+
+2. **Error**: Users want to interact with a fault-free service. The number of errors visible to the user should be as low as possible.
+    - Error rate is less than 0.05% (measured in number of HTTP4xx and 5xx as percentage of total responses) measured seperately for front- and backend
+    - Number of 4xx and 5xx for front- and backend
+
+3. **Response Time**: The service should be responsive to user interaction.
+    - Average reponse time is less than 150ms
+    - Percentage of requests that are responded in less than 300ms exeeds 95%
+
+4. **Hardware Usage**: Resource consumption gives an indication if the services need to be scaled vertically with increasing/decreasing number of users. Exeeding available resources may lead to downtime. 
+    - Average CPU usage per day should not exceed 80%
+    - Average Memory usage per day should not exceed 90%
+    - Maximum CPU & Memory usage should not exeed 95% (peak values should never reach 100%)
+
 
 ## Final Dashboard
 Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.  
+
 
 ### Uptime:
 - **Container Uptime** displays the percentage in which both the frontend and the backend pods where up and running within the given timeframe. The green threshold is set to 99.9%.
@@ -85,12 +102,20 @@ Create a Dashboard containing graphs that capture all the metrics of your KPIs a
 ![Dashboard Uptime](./answer-img/10_Grafana_Uptime.png)
 
 ### Errors:
-- **ErrorRate** shows the percentage of HTTP 5xx and 4xx responses within the total number of requests (within the given timespan; green: <0.05%)
+- **ErrorRate** shows the percentage of HTTP 5xx and 4xx responses within the total number of requests (within the given timespan; green: < 0.05%) divided by frontend and backend
 - **HTTP xxx** show the number of HTTP responses as timeseries
 ![Dashboard Errors](./answer-img/11_Grafana_Errors.png)
 
 ### Response Time:
-- **Average Response Time** shows the average response time all successful requests (green: <150ms)
-- **Request duration >300ms** shows the percentage of requests slower than 300ms (green: >95%)
+- **Average Response Time** shows the average response time all successful requests (green: < 150ms)
+- **Request duration >300ms** shows the percentage of requests slower than 300ms (green: > 95%)
 - **Jaeger Backend API Traces** shows jaeger traces to the `/api` entpoint of the backend
 ![Dashboard Response Times](./answer-img/12_Grafana_Response.png)
+
+### Hardware Usage:
+- **CPU & Memory Usage** shows the actual CPU and Memory usage over time
+- **Average CPU Usage** shows mean value of CPU usage within the given timeframe (green: < 80%)
+- **Max CPU Usage** shows maximum value of CPU usage within the given timeframe (green: < 95%)
+- **Average Memory Usage** shows mean value of total Memory usage within the given timeframe (green: < 90%)
+- **Max Memory Usage** shows maximum value of Memory usage within the given timeframe (green: < 95%)
+![Dashboard Hardware](./answer-img/13_Grafana_Hardware.png)
