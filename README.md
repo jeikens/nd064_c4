@@ -104,6 +104,8 @@ Create a Dashboard containing graphs that capture all the metrics of your KPIs a
 ### Errors:
 - **ErrorRate** shows the percentage of HTTP 5xx and 4xx responses within the total number of requests (within the given timespan; green: < 0.05%) divided by frontend and backend
 - **HTTP xxx** show the number of HTTP responses as timeseries
+
+**Notes**: I had some trouble with the metrics for the frontend at the beginning of the visible timeframe. This lead to the huge amount of HTTP4xx and 5xx errors.
 ![Dashboard Errors](./answer-img/11_Grafana_Errors.png)
 
 ### Response Time:
