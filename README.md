@@ -63,18 +63,34 @@ Description: Accessing the endpoint /app of the backend service sometimes causes
 We want to create an SLO guaranteeing that our application has a 99.95% uptime per month. Name four SLIs that you would use to measure the success of this SLO.
 
 
-1. Percentage of uptime of the backend and frontend containers is greater than 99.95%
+1. Percentage of uptime of the backend and frontend containers is greater than 99.9%
 2. Error Rate is less than 0.05% (HTTP4xx and 5xx responses to total number of requests)
 3. Average response time less than 150ms
-4. 99.9% requests are answered in less than 300ms
+4. 95% requests are answered in less than 300ms
 
 
 ## Building KPIs for our plan
 Now that we have our SLIs and SLOs, create a list of 2-3 KPIs to accurately measure these metrics as well as a description of why those KPIs were chosen. We will make a dashboard for this, but first write them down here.
 
-1. Service Uptime is greater than 99.9%: Users want to be able to access online services whenever they like. Regular downtime of a service will certainly repell users.
-2. Error rate is less than 0.05%: Users want to interact with a fault-free service. The number of errors visible to the user should be as low as possible.
-3. Average response time is less than 150ms: The service should be responsive to user interaction. 
+1. Service **Uptime** is greater than 99.9%: Users want to be able to access online services whenever they like. Regular downtime of a service will certainly repell users.
+2. **Error** rate is less than 0.05%: Users want to interact with a fault-free service. The number of errors visible to the user should be as low as possible.
+3. Average **response time** is less than 150ms: The service should be responsive to user interaction. 
 
 ## Final Dashboard
-*TODO*: Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.  
+Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.  
+
+### Uptime:
+- **Container Uptime** displays the percentage in which both the frontend and the backend pods where up and running within the given timeframe. The green threshold is set to 99.9%.
+- **Availability** shows if at least one of the pods for both frontend and backend were up and running as timeseries
+![Dashboard Uptime](./answer-img/10_Grafana_Uptime.png)
+
+### Errors:
+- **ErrorRate** shows the percentage of HTTP 5xx and 4xx responses within the total number of requests (within the given timespan; green: <0.05%)
+- **HTTP xxx** show the number of HTTP responses as timeseries
+![Dashboard Errors](./answer-img/11_Grafana_Errors.png)
+
+### Response Time:
+- **Average Response Time** shows the average response time all successful requests (green: <150ms)
+- **Request duration >300ms** shows the percentage of requests slower than 300ms (green: >95%)
+- **Jaeger Backend API Traces** shows jaeger traces to the `/api` entpoint of the backend
+![Dashboard Response Times](./answer-img/12_Grafana_Response.png)
